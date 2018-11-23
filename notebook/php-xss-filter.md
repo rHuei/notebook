@@ -27,7 +27,8 @@ XSS攻擊通常指的是通過利用網頁開發時留下的漏洞，通過巧�
 
 ![xss-web-name](/images/xss-web-name.PNG)
 
-如果在網址後面帶入特殊自元後: http://example.com/php-xss-filter.php?username=阿明<script>alert('XSS')</script>
+如果在網址後面帶入特殊自元後: 
+```http://example.com/php-xss-filter.php?username=阿明<script>alert('XSS')</script>```
 
 ![xss-web-attack](/images/xss-web-attack.PNG)
 
