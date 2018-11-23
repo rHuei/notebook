@@ -19,7 +19,11 @@ XSS攻擊通常指的是通過利用網頁開發時留下的漏洞，通過巧�
 ```
 
 #### 漏洞網頁示範
-假設有一個具有漏洞的簡單網頁是長這樣的畫面
+假設有一個具有漏洞的簡單網頁是長這樣的畫面:
 
-![web.PNG](/images/xss-web.PNG)
+![xss-web](/images/xss-web.PNG)
+
+正常輸入後會回應名子:
+
+![xss-web-name](/images/xss-web-name.PNG)
 
