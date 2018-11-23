@@ -43,6 +43,7 @@ XSS攻擊通常指的是通過利用網頁開發時留下的漏洞，通過巧�
   - ASP.NET的```Server.HtmlEncode()```或功能更強的Microsoft Anti-Cross Site Scripting Library
   - Java的xssprotect (Open Source Library)。
   - Node.js的node-validator。
+
 如果要PHP網頁對所有進行過濾，可以在的開頭加入漏洞過濾的函數，將特殊字元編碼，如下:
 ```php
 <?php
