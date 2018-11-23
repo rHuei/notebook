@@ -34,3 +34,15 @@ XSS攻擊通常指的是通過利用網頁開發時留下的漏洞，通過巧�
 - 駭客就能透過這個漏洞網頁，傳送資訊給別人了。如果是一張誘人的圖片是否又更讓人想點進去看呢?
 ![xss-web-attack-img](/images/xss-web-attack-img.PNG)
 
+# 漏洞的防禦和利用
+- 過濾特殊字元
+  避免XSS的方法之一主要是將使用者所提供的內容進行過濾，許多語言都有提供對HTML的過濾：
+  - PHP的```htmlentities()```或是```htmlspecialchars()```。
+Python的cgi.escape()。
+ASP的Server.HTMLEncode()。
+ASP.NET的Server.HtmlEncode()或功能更強的Microsoft Anti-Cross Site Scripting Library
+Java的xssprotect (Open Source Library)。
+Node.js的node-validator。
+在PHP網頁的開頭加入漏洞過濾的函數，將特殊字元編碼，如下:
+
+
