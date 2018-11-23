@@ -36,7 +36,7 @@ XSS攻擊通常指的是通過利用網頁開發時留下的漏洞，通過巧�
 
 # 漏洞的防禦和利用
 - 過濾特殊字元
-  避免XSS的方法之一主要是將使用者所提供的內容進行過濾，許多語言都有提供對HTML的過濾：
+避免XSS的方法之一主要是將使用者所提供的內容進行過濾，許多語言都有提供對HTML的過濾：
   - PHP的```htmlentities()```或是```htmlspecialchars()```。
 Python的cgi.escape()。
 ASP的Server.HTMLEncode()。
