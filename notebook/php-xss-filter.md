@@ -19,18 +19,18 @@ XSS攻擊通常指的是通過利用網頁開發時留下的漏洞，通過巧�
 ```
 
 #### 漏洞網頁示範
-假設有一個具有漏洞的簡單網頁是長這樣的畫面:
+- 假設有一個具有漏洞的簡單網頁是長這樣的畫面:
 
 ![xss-web](/images/xss-web.PNG)
 
-正常輸入後會回應名子:
+- 正常輸入後會回應名子:
 
 ![xss-web-name](/images/xss-web-name.PNG)
 
-如果在網址後面帶入特殊自元後: 
+- 如果在網址後面帶入特殊自元後: 
 ```http://example.com/php-xss-filter.php?username=阿明<script>alert('XSS')</script>```
 
 ![xss-web-attack](/images/xss-web-attack.PNG)
-駭客就能透過這個漏洞網頁，傳送資訊給別人了。如果是一張誘人的圖片是否又更讓人想點進去看呢?
+- 駭客就能透過這個漏洞網頁，傳送資訊給別人了。如果是一張誘人的圖片是否又更讓人想點進去看呢?
 ![xss-web-attack-img](/images/xss-web-attack-img.PNG)
 
