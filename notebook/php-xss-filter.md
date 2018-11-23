@@ -75,4 +75,8 @@ function SafeFilter (&$arr)
 }
 ?>
 ```
+最後在測試經過濾後的結果:
+
+![xss-web-filter](/images/xss-web-filter.PNG)
+
 
