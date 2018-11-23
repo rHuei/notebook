@@ -79,4 +79,7 @@ function SafeFilter (&$arr)
 
 ![xss-web-filter](/images/xss-web-filter.PNG)
 
+如此被植入的惡意程式碼，便不能正常執行了。
+
+> 參考資料: [跨網站指令碼- 維基百科，自由的百科全書 - Wikipedia](https://zh.wikipedia.org/wiki/跨網站指令碼)
 
