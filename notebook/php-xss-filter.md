@@ -77,7 +77,7 @@ function SafeFilter (&$arr)
 ```
 最後在測試經過濾後的結果:
 
-![xss-web-filter](/images/xss-web-filter.PNG)
+![xss-web-filter](/images/xss-web-filter1.PNG)
 
 如此被植入的惡意程式碼，便不能正常執行了。
 
