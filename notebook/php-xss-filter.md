@@ -17,3 +17,7 @@ XSS攻擊通常指的是通過利用網頁開發時留下的漏洞，通過巧�
 <img src="http://xxx.com/yyy.png" onerror="alert('XSS')">
 <div style="height:expression(alert('XSS'),1)"></div>（這個僅於IE7(含)之前有效）
 ```
+
+#### 漏洞網頁示範
+假設有一個具有漏洞的簡單網頁是長這樣的畫面
+![web.PNG](/images/xss-web.PNG)
