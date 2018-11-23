@@ -31,4 +31,6 @@ XSS攻擊通常指的是通過利用網頁開發時留下的漏洞，通過巧�
 ```http://example.com/php-xss-filter.php?username=阿明<script>alert('XSS')</script>```
 
 ![xss-web-attack](/images/xss-web-attack.PNG)
+駭客就能透過這個漏洞網頁，傳送資訊給別人了。如果是一張誘人的圖片是否又更讓人想點進去看呢?
+![xss-web-attack-img](/images/xss-web-attack-img.PNG)
 
