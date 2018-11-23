@@ -43,6 +43,35 @@ XSS攻擊通常指的是通過利用網頁開發時留下的漏洞，通過巧�
   - ASP.NET的```Server.HtmlEncode()```或功能更強的Microsoft Anti-Cross Site Scripting Library
   - Java的xssprotect (Open Source Library)。
   - Node.js的node-validator。
-在PHP網頁的開頭加入漏洞過濾的函數，將特殊字元編碼，如下:
+如果要PHP網頁對所有進行過濾，可以在的開頭加入漏洞過濾的函數，將特殊字元編碼，如下:
+```php
+<?php
+//php防注入和XSS攻擊通用過濾
+$_GET       && SafeFilter($_GET);
+$_POST      && SafeFilter($_POST);
+$_COOKIE    && SafeFilter($_COOKIE);
 
+function SafeFilter (&$arr)
+{
+      if (is_array($arr))
+     {
+          foreach ($arr as $key => $value)
+          {
+               if (!is_array($value))
+               {
+                    if (!get_magic_quotes_gpc())    //不對magic_quotes_gpc轉義過的字符使用addslashes(),避免雙重轉義。
+                    {
+                         $value    = addslashes($value);    //給單引號（'）、雙引號（"）、反斜線（\）與 NUL（NULL 字符）加上反斜線轉義
+                    }
+                    $arr[$key]    = htmlspecialchars($value,ENT_QUOTES);   //&,",',> ,< 轉為html實體 &amp;,&quot;',&gt;,&lt;
+               }
+               else
+               {
+                    SafeFilter($arr[$key]);
+               }
+          }
+     }
+}
+?>
+```
 
