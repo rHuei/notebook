@@ -8,7 +8,7 @@
 touch .gitattributes
 git lfs track test.psd
 ```
-## 可以建立branch保護資料
+#### 可以建立branch保護資料
 ```bash
 git checkout -b prod
 git add file.iso
