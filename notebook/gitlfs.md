@@ -9,7 +9,7 @@ touch .gitattributes
 git lfs track test.psd
 ```
 #### 可以建立branch保護資料
-```bash
+```git
 git checkout -b prod
 git add file.iso
 git merge master
