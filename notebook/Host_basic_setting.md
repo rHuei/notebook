@@ -31,7 +31,41 @@ gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 ----------------------------------------------
 ```
+- 進行一次全系統更新
 ```bash
 yum clean all
 yum update
+```
+- 觀察一下核心的項目 (rpm -qa | grep kernel | sort) 以及核心位置的目錄資料 (/lib/modules)
+```bash
+rpm -qa | grep kernel | sort
+abrt-addon-kerneloops-2.1.11-52.el7.centos.x86_64
+kernel-3.10.0-957.5.1.el7.x86_64
+kernel-3.10.0-957.el7.x86_64
+kernel-tools-3.10.0-957.5.1.el7.x86_64
+kernel-tools-libs-3.10.0-957.5.1.el7.x86_64
+
+ll /lib/modules
+總計 8
+drwxr-xr-x. 7 root root 4096  2月 26 09:36 3.10.0-957.5.1.el7.x86_64
+drwxr-xr-x. 7 root root 4096  2月 19 20:08 3.10.0-957.el7.x86_64
+
+dracut -v test.img kernel-3.10.0-957.el7.x86_64
+```
+```bash
+lsmod
+modinfo e1000e  # 內建網卡模組
+
+ip links show # 查看網卡名稱
+lspci | grep -i ether
+ethtool -i eno1 # 查看driver名稱
+
+dracut --add-drivers "e1000e" -v test.img kernel-3.10.0-957.el7.x86_64 # 將新模組加入
+depmod -a # 重新所有模組
+modprobe nfs  # 將模組載入到目前系統
+```
+- 在 /root/bin 底下，建立一隻名為 maintain.sh 的 shell script，且每日 1:20 執行這個指令
+```bash
+mkdir /root/bin
+cd bin
 ```
