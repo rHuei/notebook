@@ -92,3 +92,54 @@ vim /etc/crontab
 
 /root/bin/maintain.sh
 ```
+
+## 2. 讓系統維護狀態可以讓你瞧見
+因為我們的環境裡面已經有既有的 mail server，所以無須重新自己設定 mail server，因為目的不同！ 我們只需要讓這部 server 的訊息，可以傳送到外部的 public mail server 即可
+- 修改 /etc/postfix/main.cf 的內容，將 relayhost 設定為 [mail.ksu.edu.tw] 的模樣， 重新啟動 postfix 之後，就支援信件轉送到 relayhost 的機器上了！
+```bash
+dig -x [ip]  # 複製主機名稱
+
+vim /etc/postfix/main.cf  # 修改這幾行`
+----------------------------------------------
+myhostname = xxx.xxx.xxx.xxx.ksu.edu.tw
+myorigin = $myhostname
+relayhost = [mail.ksu.edu.tw]
+----------------------------------------------
+
+systemctl restart postfix.service
+```
+- 再加上 /etc/aliases 修改 root 的收件人成為 root: root,yourname@mail.ksu.edu.tw 這樣， 當 root 有信件時，就可以送一份給你在 mail.ksu.edu.tw 上面的帳號！如果沒有，那可能還是收不到...
+```bash
+vim /etc/aliases  # 修改最底下
+----------------------------------------------
+root:           root,s106001694@g.ksu.edu.tw
+----------------------------------------------
+
+newaliases
+
+echo "hahaha" | mail -s 'test from dic' root  # 測試寄信看看
+```
+
+## 3. 系統安全強化
+- 未來可能會開發一些奇怪的東西，因此建議 SELinux 設定改為 permissive 即可
+```bash
+vim /etc/selinux/config
+----------------------------------------------
+SELINUX=permissive
+----------------------------------------------
+
+restorecon -Rv /etc
+getenforce
+setenforce 0
+getenforce
+```
+- 將不必要的服務關閉，對 Internet 提供服務的，只需要 port 22 即可
+```bash
+vim /etc/ssh/sshd_config  # 修改底下幾行
+----------------------------------------------
+PermitRootLogin no
+UseDNS no
+----------------------------------------------
+
+systemctl restart sshd
+```
