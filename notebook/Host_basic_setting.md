@@ -69,3 +69,26 @@ modprobe nfs  # 將模組載入到目前系統
 mkdir /root/bin
 cd bin
 ```
+```bash
+vim maintain.sh
+----------------------------------------------
+#!/bin/bash
+
+#1. check the date and time
+/sbin/ntpdate 120.114.100.1
+/sbin/hwclock -w
+
+# 2. yum update
+/bin/yum -y update
+----------------------------------------------
+
+sh -x maintain.sh
+chmod a+x maintain.sh
+
+vim /etc/crontab
+----------------------------------------------
+20   1  *  *  * root /root/bin/maintain.sh
+----------------------------------------------
+
+/root/bin/maintain.sh
+```
