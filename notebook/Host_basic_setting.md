@@ -143,3 +143,21 @@ UseDNS no
 
 systemctl restart sshd
 ```
+- 定期觀察你的磁碟陣列狀態
+```bash
+cat /proc/mdstat
+----------------------------------------------
+Personalities : [raid1]
+md126 : active raid1 sda[1] sdb[0]
+      488383488 blocks super external:/md127/0 [2/2] [UU]
+
+md127 : inactive sda[1](S) sdb[0](S)
+      6192 blocks super external:imsm
+
+unused devices: <none>
+----------------------------------------------
+
+mdadm --detail /dev/md126
+mdadm -A -U resync /dev/md126 /dev/sda /dev/sdb   # 重新同步
+
+```
