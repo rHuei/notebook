@@ -1,4 +1,4 @@
-[參考連結](http://dic.vbird.tw/network_project/unit02.php)
+[參考連結:http://dic.vbird.tw/network_project/unit02.php](http://dic.vbird.tw/network_project/unit02.php)
 # 實體主機母系統 (Host) 的設計
 作為虛擬主機的母系統之用，應該盡量減少不必要的服務，同時降低可以連線操作的人數！讓系統的穩定性提高。 此外，由於作為虛擬機器的原生母系統，其效能得要進行一些調整與設計，這樣你的虛擬機器運作會比較順暢些。
 ## 1. 系統軟體自動更新與維護
