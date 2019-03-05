@@ -434,10 +434,22 @@ do
 done
 ----------------------------------------------
 - 網路效能測試
-到此處[https://kojipkgs.fedoraproject.org//packages/iperf3/](https://kojipkgs.fedoraproject.org//packages/iperf3/)下載最新iperf
+到此處https://kojipkgs.fedoraproject.org//packages/iperf3/下載最新iperf
 ```bash
 wget https://kojipkgs.fedoraproject.org//packages/iperf3/3.6/4.fc30/x86_64/iperf3-3.6-4.fc30.x86_64.rpm
 yum install ./iperf3-3.6-4.fc30.x86_64.rpm
 ```
+Server:
+```bash
+iptables -A INPUT -p tcp -m tcp --dport 5202 -j ACCEPT
+iperf3 -s [-p port]
+```
 
+Client:
+```bash
+# client > server
+iperf3 -c [ip] -t 30 -i 5 
+
+# server > client
+iperf3 -c [ip] -t 30 -i 5 -R
 ```
