@@ -143,6 +143,50 @@ UseDNS no
 
 systemctl restart sshd
 ```
+- 將 firewalld 服務關閉，改成 iptables 的狀態
+```bash
+systemctl stop firewalld
+systemctl disable firewalld
+yum install iptables-services
+systemctl start iptables
+systemctl enable iptables
+
+iptables-save > firewall.sh
+vim firewall.sh
+----------------------------------------------
+#!/bin/bash
+
+# 1. clean rule
+iptables -F
+iptables -X
+iptables -Z
+
+# 2. create policy
+iptables -P INPUT DROP
+iptables -P OUTPUT ACCEPT
+iptables -P FORWARD ACCEPT
+
+# 3. create rules
+iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A INPUT -p icmp -j ACCEPT
+iptables -A INPUT -i lo -j ACCEPT
+# port 22 only for DIC class room.
+iptables -A INPUT -s 120.114.140.0/24 -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
+iptables -A INPUT -s 120.114.141.0/24 -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
+iptables -A INPUT -s 120.114.142.0/24 -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
+
+# 4. NAT
+iptables -t nat -F
+iptables -t nat -X
+iptables -t nat -Z
+iptables -t nat -A PREROUTING -p tcp --dport 5050 -j REDIRECT --to-port 22
+
+# final. save rule
+iptables-save > /etc/sysconfig/iptables
+----------------------------------------------
+
+sh firewall.sh
+```
 - 定期觀察你的磁碟陣列狀態
 ```bash
 cat /proc/mdstat
@@ -160,4 +204,40 @@ unused devices: <none>
 mdadm --detail /dev/md126
 mdadm -A -U resync /dev/md126 /dev/sda /dev/sdb   # 重新同步
 
+smartctl --scan
+smartctl --all /dev/sda
+smartctl -t short /dev/sda
+```
+定期寄信檢查
+```bash
+vim bin/maintain.sh
+----------------------------------------------
+#!/bin/bash
+
+#1. check the date and time
+echo "############################################"
+echo "check your server's time"
+/sbin/ntpdate 120.114.100.1
+/sbin/hwclock -w
+
+# 2. yum update
+echo "############################################"
+echo "check update package"
+/bin/yum -y update
+
+# 3. check your hard drive's health
+echo "############################################"
+echo "Your raid status"
+cat /proc/mdstat
+echo "disk's temp"
+smartctl --all /dev/sda | grep -i temp | grep -v Min
+smartctl --all /dev/sdb | grep -i temp | grep -v Min
+echo "check usage"
+df -h | grep -v 'tmpfs'
+
+# 4. who login my server use ssh (last 5 person)
+echo "############################################"
+echo "check ssh login"
+last | head -n 5
+----------------------------------------------
 ```
