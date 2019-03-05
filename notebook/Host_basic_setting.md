@@ -285,3 +285,128 @@ net.core.netdev_max_backlog     = 10000
 net.ipv4.ip_forward           = 1
 ```
 可以將上述的資料寫入 /etc/sysctl.d/somename.conf ，未來會自動生效，或者使用『 sysctl -p filename 』立刻啟動！
+- 網卡的效能調整
+```bash
+ethtool eno1
+----------------------------------------------
+Settings for eno1:
+        Supported ports: [ TP ]
+        Supported link modes:   10baseT/Half 10baseT/Full
+                                100baseT/Half 100baseT/Full
+                                1000baseT/Full
+        Supported pause frame use: No
+        Supports auto-negotiation: Yes
+        Supported FEC modes: Not reported
+        Advertised link modes:  10baseT/Half 10baseT/Full
+                                100baseT/Half 100baseT/Full
+                                1000baseT/Full
+        Advertised pause frame use: No
+        Advertised auto-negotiation: Yes
+        Advertised FEC modes: Not reported
+        Speed: 1000Mb/s
+        Duplex: Full
+        Port: Twisted Pair
+        PHYAD: 1
+        Transceiver: internal
+        Auto-negotiation: on
+        MDI-X: on (auto)
+        Supports Wake-on: pumbg
+        Wake-on: g
+        Current message level: 0x00000007 (7)
+                               drv probe link
+        Link detected: yes
+----------------------------------------------
+
+ethtool -i eno1
+----------------------------------------------
+driver: e1000e
+version: 3.2.6-k
+firmware-version: 0.5-1
+expansion-rom-version:
+bus-info: 0000:00:19.0
+supports-statistics: yes
+supports-test: yes
+supports-eeprom-access: yes
+supports-register-dump: yes
+supports-priv-flags: no
+----------------------------------------------
+
+ethtool -a eno1
+----------------------------------------------
+Pause parameters for eno1:
+Autonegotiate:  on
+RX:             on
+TX:             on
+----------------------------------------------
+
+ethtool -g eno1
+----------------------------------------------
+Ring parameters for eno1:
+Pre-set maximums:
+RX:             4096
+RX Mini:        0
+RX Jumbo:       0
+TX:             4096
+Current hardware settings:
+RX:             256
+RX Mini:        0
+RX Jumbo:       0
+TX:             256
+----------------------------------------------
+
+ethtool -k eno1
+----------------------------------------------
+Features for eno1:
+rx-checksumming: on
+tx-checksumming: on
+        tx-checksum-ipv4: off [fixed]
+        tx-checksum-ip-generic: on
+        tx-checksum-ipv6: off [fixed]
+        tx-checksum-fcoe-crc: off [fixed]
+        tx-checksum-sctp: off [fixed]
+scatter-gather: on
+        tx-scatter-gather: on
+        tx-scatter-gather-fraglist: off [fixed]
+tcp-segmentation-offload: on
+        tx-tcp-segmentation: on
+        tx-tcp-ecn-segmentation: off [fixed]
+        tx-tcp6-segmentation: on
+        tx-tcp-mangleid-segmentation: off
+udp-fragmentation-offload: off [fixed]
+generic-segmentation-offload: on
+generic-receive-offload: on
+large-receive-offload: off [fixed]
+rx-vlan-offload: on
+tx-vlan-offload: on
+ntuple-filters: off [fixed]
+receive-hashing: on
+highdma: on [fixed]
+rx-vlan-filter: off [fixed]
+vlan-challenged: off [fixed]
+tx-lockless: off [fixed]
+netns-local: off [fixed]
+tx-gso-robust: off [fixed]
+tx-fcoe-segmentation: off [fixed]
+tx-gre-segmentation: off [fixed]
+tx-ipip-segmentation: off [fixed]
+tx-sit-segmentation: off [fixed]
+tx-udp_tnl-segmentation: off [fixed]
+fcoe-mtu: off [fixed]
+tx-nocache-copy: off
+loopback: off [fixed]
+rx-fcs: off
+rx-all: off
+tx-vlan-stag-hw-insert: off [fixed]
+rx-vlan-stag-hw-parse: off [fixed]
+rx-vlan-stag-filter: off [fixed]
+busy-poll: off [fixed]
+tx-gre-csum-segmentation: off [fixed]
+tx-udp_tnl-csum-segmentation: off [fixed]
+tx-gso-partial: off [fixed]
+tx-sctp-segmentation: off [fixed]
+rx-gro-hw: off [fixed]
+l2-fwd-offload: off [fixed]
+hw-tc-offload: off [fixed]
+rx-udp_tunnel-port-offload: off [fixed]
+----------------------------------------------
+```
