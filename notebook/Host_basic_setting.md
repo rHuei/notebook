@@ -241,3 +241,47 @@ echo "check ssh login"
 last | head -n 5
 ----------------------------------------------
 ```
+## 4. 系統效能調整
+- 先透過 tuned-adm list 來查看目前的系統自動調整效能
+```bash
+tuned-adm list
+----------------------------------------------
+Available profiles:
+- balanced                    - General non-specialized tuned profile
+- desktop                     - Optimize for the desktop use-case
+- latency-performance         - Optimize for deterministic performance at the cost of increased power consumption
+- network-latency             - Optimize for deterministic performance at the cost of increased power consumption, focused on low latency network performance
+- network-throughput          - Optimize for streaming network throughput, generally only necessary on older CPUs or 40G+ networks
+- powersave                   - Optimize for low power consumption
+- throughput-performance      - Broadly applicable tuning that provides excellent performance across a variety of common server workloads
+- virtual-guest               - Optimize for running inside a virtual guest
+- virtual-host                - Optimize for running KVM guests
+Current active profile: throughput-performance
+----------------------------------------------
+```
+- 可以使用 tuned-adm profile XXX 來設定好使用的 profile
+```bash
+# 最高效能
+tuned-adm profile throughput-performance
+# KVM效能
+tuned-adm profile virtual-host
+```
+- 可以針對主機的網路參數進行優化
+```bash
+net.core.optmem_max     =  262144
+net.core.rmem_default   =  262144
+net.core.wmem_default   =  262144
+net.core.rmem_max       = 8388608
+net.core.wmem_max       = 8388608
+net.ipv4.tcp_rmem       = 4096 87380 8388608
+net.ipv4.tcp_wmem       = 4096 65536 8388608
+net.ipv4.tcp_tw_reuse           = 1
+net.ipv4.tcp_tw_recycle         = 1
+net.ipv4.tcp_window_scaling     = 1
+net.ipv4.tcp_sack               = 0
+net.ipv4.tcp_timestamps         = 0
+net.ipv4.tcp_syncookies         = 0
+net.core.netdev_max_backlog     = 10000
+net.ipv4.ip_forward           = 1
+```
+可以將上述的資料寫入 /etc/sysctl.d/somename.conf ，未來會自動生效，或者使用『 sysctl -p filename 』立刻啟動！
