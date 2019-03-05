@@ -410,3 +410,34 @@ hw-tc-offload: off [fixed]
 rx-udp_tunnel-port-offload: off [fixed]
 ----------------------------------------------
 ```
+```bash
+ip link show
+ethtool -i [nicname]
+for nic in [nicname]
+do
+        ifconfig ${nic} txqueuelen 10000
+        ethtool -G ${nic} rx 4096 tx 4096
+        ethtool -K ${nic} lro off gro off
+done
+```
+可將上述的資料寫入 /etc/rc.d/rc.local，每次自動生效
+- 修改磁碟的效能
+```bash
+lsblk -ti
+# 寫入/etc/rc.d/rc.local
+----------------------------------------------
+for hdd in sda sdb
+do
+	echo 8192     > /sys/block/${hdd}/queue/read_ahead_kb
+	echo 8192     > /sys/block/${hdd}/queue/max_sectors_kb
+	echo deadline > /sys/block/${hdd}/queue/scheduler
+done
+----------------------------------------------
+- 網路效能測試
+到此處[https://kojipkgs.fedoraproject.org//packages/iperf3/](https://kojipkgs.fedoraproject.org//packages/iperf3/)下載最新iperf
+```bash
+wget https://kojipkgs.fedoraproject.org//packages/iperf3/3.6/4.fc30/x86_64/iperf3-3.6-4.fc30.x86_64.rpm
+yum install ./iperf3-3.6-4.fc30.x86_64.rpm
+```
+
+```
