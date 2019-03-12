@@ -99,3 +99,16 @@ virsh net-list
 virsh net-start  netdomain		# 這個網路界面已經被記載到 libvirtd 的管理中
 virsh net-create netdomain.xml		# 這個網路界面沒有被記載，但是，是實際存在的一個 xml 檔案格式
 ```
+- 透過介接到實體網卡來處理的 forward 模式
+```bash
+vim qforward.xml
+<network>
+  <name>qforward</name>
+  <forward dev='eno1' mode='bridge'>
+    <interface dev='eno1'/>
+  </forward>
+</network>
+
+virsh net-create qforward.xml
+virsh net-list
+```
