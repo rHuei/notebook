@@ -44,3 +44,18 @@ Mar 11 20:11:41 120-114-142-27 NetworkManager[4186]:   [1552306301.9576] device 
 Mar 11 20:11:41 120-114-142-27 libvirtd: 2019-03-11 12:11:41.958+0000: 4955: error : virNetDevSendEthtoolIoctl:3072 : ethtool ioctl error: 沒有此一裝置
 Mar 11 20:11:41 120-114-142-27 libvirtd: 2019-03-11 12:11:41.960+0000: 4955: error : virNetDevSendEthtoolIoctl:3072 : ethtool ioctl error: 沒有此一裝置
 ```
+處理的方法其實很簡單，完整的重新開機是一個方式，另一個則是透過重新啟動 libvirtd 來處理即可
+```bash
+systemctl restart libvirtd
+```
+- 完成底下的實做
+a. 將 /etc/libvirt/qemu/networks/default.xml 備份到 /root/virtual/ 目錄內
+```bash
+mkdir ~/virtual
+cd /root/virtual
+cp /etc/libvirt/qemu/networks/default.xml /root/virtual
+```
+b. 列出目前所有的虛擬網路橋接器
+```bash
+virsh net-list --all
+```
