@@ -112,3 +112,47 @@ vim qforward.xml
 virsh net-create qforward.xml
 virsh net-list
 ```
+但是由於 forward 模式直接取用實體網卡來作為橋接，因此，使用 ip addr show 的時候，並不需要額外的橋接界面， 所以你只會看到我們剛剛設計的 virbr1 那張界面橋接器而已。
+## 4. 設計虛擬磁碟
+- 虛擬磁碟可以是實體磁碟、可以是檔案、可以是 LVM 裝置等等
+- 虛擬磁碟可以使用 qemu-img 來建置
+- 常見的虛擬磁碟格式，主要為 qcow2 與 raw ，其餘不要考慮
+- raw 格式最快，但是得先預留出磁碟容量，因此不建議
+- qcow2 還在持續發展中，速度與 raw 已經差不多，而且檔案系統用多少，算多少。
+- 觀察與建立的方法
+```bash
+qemu-img --help
+qemu-img create -f qcow2 -o cluster_size=[512,1K,..2M] /vmdisk/your_image_filename.img sizeG 
+qemu-img info yourfile.img
+```
+請實做一個 40G 的虛擬磁碟，檔名就設定為 /vmdisk/centos7.raw.img
+```bash
+qemu-img create -f qcow2 -o cluster_size=1M /vmdisk/centos7.raw.img 40G
+```
+## 5. 由系統預設建立 XML 檔案資訊
+- 安裝 virt-install 軟體，使用 virt-install 去建立一個 XML 檔案之後，再來修改
+```bash
+yum install virt-install
+man virt-install
+--dry-run
+--print-xml
+virt-install \
+	--name demo1 \
+	--cpu host --vcpus 4 --memory 2048 --memballoon virtio \
+	--clock offset=localtime \
+	--controller virtio-scsi \
+	--disk /vmdisk/centos7.raw.img,cache=writeback,io=threads,device=disk,bus=virtio \
+	--network network=qnet,model=virtio \
+	--graphics spice,port=5911,listen=0.0.0.0,password=centos7 \
+	--cdrom /vmdisk/iso/CentOS-7-x86_64-DVD-1810.iso \
+	--video qxl \
+	--dry-run --print-xml \
+```
+還有其他參數，請自行前往查詢
+- 更多的 XML 參數，可以參考： https://libvirt.org/formatdomain.html
+- 修改 xml 檔案，讓該檔案的內容符合你的環境規劃！
+- 使用 xml 檔案啟動虛擬機，透過虛擬機的內容，開始進行 CentOS 虛擬機器的安裝流程！
+(務必使用最小安裝！)
+- 使用 virsh list 查閱虛擬機器的狀態
+- 搭配你的 VM spice port，可能需要開啟防火牆設置！
+- 注意，取得虛擬機器的終端界面，務必要小心在意！尤其是取得時，最好輸入帳號與密碼才好喔！
