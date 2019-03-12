@@ -21,3 +21,26 @@ virsh [net-destroy|net-undefine] netdomain
 vim /etc/libvirt/qemu/networks/default.xml
 ip addr show
 ```
+- 你可以查詢、關閉與取消網路橋接器的定義！透過的方法如上所示
+```bash
+virsh net-list
+virsh net-destroy default
+virsh net-list --all
+virsh net-start default
+virsh net-destroy default
+# virsn net-undefine default (這個指令暫時不要進行！)
+```
+你的系統可能由於近期內有升級過，或者是其他函式庫有更新，可能會導致你的 libvirtd 有點奇怪，有時候會出現如下的訊息
+```bash
+# 1. 指令操作時，出現如下的奇怪錯誤！明明沒啥問題！
+virsh net-start default
+錯誤：無法開啟網路 default
+錯誤：The name org.fedoraproject.FirewallD1 was not provided by any .service files
+
+# 2. 查看 messages 時，出現如下奇怪的錯誤：
+Mar 11 20:11:41 120-114-142-27 kernel: virbr0: port 1(virbr0-nic) entered disabled state
+Mar 11 20:11:41 120-114-142-27 libvirtd: 2019-03-11 12:11:41.956+0000: 4955: error : virNetDevSendEthtoolIoctl:3072 : ethtool ioctl error: 沒有此一裝置
+Mar 11 20:11:41 120-114-142-27 NetworkManager[4186]:   [1552306301.9576] device (virbr0-nic): released from master device virbr0
+Mar 11 20:11:41 120-114-142-27 libvirtd: 2019-03-11 12:11:41.958+0000: 4955: error : virNetDevSendEthtoolIoctl:3072 : ethtool ioctl error: 沒有此一裝置
+Mar 11 20:11:41 120-114-142-27 libvirtd: 2019-03-11 12:11:41.960+0000: 4955: error : virNetDevSendEthtoolIoctl:3072 : ethtool ioctl error: 沒有此一裝置
+```
