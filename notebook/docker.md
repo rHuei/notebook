@@ -149,7 +149,7 @@ echo "hello word" > /var/www/html/index.html
 ```
 4. 啟動
 ```
-/usr/sbin/apache -DFOREGROUND
+/usr/sbin/apachectl -DFOREGROUND
 ```
 5. 更新容器
 先退出容器
@@ -158,9 +158,9 @@ docker commit test web
 ```
 6. 啟動容器
 ```
-docker run -itd -p 80:80 web /usr/sbin/apache -DFOREGROUND
+docker run -itd -p 80:80 web /usr/sbin/apachectl -DFOREGROUND
 ```
-以上步驟非常麻煩，可以建立一個類似腳本的方式，來方便運作。
+以上步驟非常麻煩，可以建立一個類似腳本的方式，透過Dockerfile一建完成所有動作，快速建置映像檔。
 ## Dockerfile
 使用 Dockerfile 讓使用者可以建立自定義的映像檔
 ### 基本架構
@@ -192,3 +192,37 @@ docker run -itd -p 80:80 web /usr/sbin/apache -DFOREGROUND
 指定啟動容器時執行的命令，每個 Dockerfile 只能有一條 CMD 命令。如果指定了多條命令，只有最後一條會被執行。
 
 如果使用者啟動容器時候指定了運行的命令，則會覆蓋掉 CMD 指定的命令。
+
+***EXPOSE***
+
+格式為 EXPOSE <port> [<port>...]。
+ 
+設定 Docker 伺服器容器對外的埠號，供外界使用。在啟動容器時需要透過 -P，Docker 會自動分配一個埠號轉發到指定的埠號。
+
+### 安裝Apache範例
+```
+mkdir myweb
+cd myweb
+vim Dockerfile
+------------------------------------------------------------
+FROM centos:latest
+MAINTAINER CENTOS WEB APP
+
+RUN yum -y update && \
+    yum -y install httpd && \
+    yum clean all && \
+    echo "hello new world" > /var/www/html/index.html
+
+EXPOSE 80
+
+CMD ["/usr/sbin/apachectl","-DFOREGROUND"]
+------------------------------------------------------------
+
+docker build -t web:v1 .
+
+docker images
+
+docker run -itd -p 8888:80 web:v1
+```
+
+
