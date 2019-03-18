@@ -92,6 +92,18 @@ docker ps -a
 ### docker run
 建立Container
 ```
-docker 
+# -i: 讓標準輸入維持在打開的狀態
+# -t: 替Container配置一個虛擬的終端機
+docker run -it centos 
+
+# 給予容器名稱，預設為隨機名稱
+docker run -it --name jack centos
+
+# 在背景開啟容器
+docker run -itd centos
+
+# 可以將主機的Port綁定到Container的Port
+docker run -itd -p 8080:80 centos
 ```
+如果不要停止 container 而要退出 docker container 的terminal 需要輸入 `ctrl + p` 之後再輸入 `ctrl + q` 的按鍵，就不會把 container 關閉。
 
