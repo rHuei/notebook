@@ -56,8 +56,42 @@ systemctl enable docker
 ```
 
 ## Docker指令
+
 ### docker images
 檢視本地目前有哪些映像檔
-```docker
+```bash
 docker images
 ```
+
+### docker search [image name]
+搜尋Docker Hub上有哪些Image
+```bash
+docker search centos 
+
+# 搜尋是官方的 Docker image
+docker search centos -f is-official=true
+```
+
+### docker pull [image name]
+下載image到本地
+```bash
+docker pull centos
+
+# 下載指定版本
+docker pull centos:[tags]
+```
+### docker ps
+查看Container
+```bash
+docker ps
+
+# 查看全部，包含停止狀態的
+docker ps -a
+```
+
+### docker run
+建立Container
+```
+docker 
+```
+
