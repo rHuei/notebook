@@ -26,8 +26,29 @@ Feauture    |    Containers    | Virtual Machines ( 傳統的虛擬化 )
 支援數量     | 非常多 Containers | 10多個就很了不起了
 複製相同環境 |         快        | 超慢
  
+### Docker名詞概念
+***Image***
+映像檔，可以把它想成是以前我們在玩 VM 的 Guest OS（ 安裝在虛擬機上的作業系統 ）。
+Image是唯獨(R/O)
+
+***Container***
+容器，利用映像檔（ Image ）所創造出來的，一個 Image 可以創造出多個不同的 Container，
+
+Container 也可以被啟動、開始、停止、刪除，並且互相分離。
+
+Container 在啟動的時候會建立一層在最外（上）層並且是讀寫模式（ R/W ）。
+
+***Registry***
+可以把它想成類似 GitHub，裡面存放了非常多的 Image ，可在 Docker Hub 中查看。
+
 ## 安裝 Docker 環境
 Docker已加入現有的yum倉庫了，所以直接yum安裝就好了!
 ```bash
 yum install docker
 ```
+開機自動開啟/啟動
+```bash
+systemctl start docker
+systemctl enable docker
+```
+
