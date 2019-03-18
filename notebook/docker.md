@@ -45,7 +45,7 @@ Container 在啟動的時候會建立一層在最外（上）層並且是讀寫�
 可以把它想成類似 GitHub，裡面存放了非常多的 Image ，可在 [Docker Hub](https://hub.docker.com/) 中查看。
 
 ## 安裝 Docker 環境
-Docker已加入現有的yum倉庫了，所以直接yum安裝就好了!
+Docker 已加入現有的yum倉庫了，所以直接 yum 安裝就好了!
 ```bash
 yum install docker
 ```
@@ -55,3 +55,9 @@ systemctl start docker
 systemctl enable docker
 ```
 
+## Docker指令
+### docker images
+檢視本地目前有哪些映像檔
+```docker
+docker images
+```
