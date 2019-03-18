@@ -26,3 +26,8 @@ Feauture    |    Containers    | Virtual Machines ( 傳統的虛擬化 )
 支援數量     | 非常多 Containers | 10多個就很了不起了
 複製相同環境 |         快        | 超慢
  
+## 安裝 Docker 環境
+Docker已加入現有的yum倉庫了，所以直接yum安裝就好了!
+```bash
+yum install docker
+```
