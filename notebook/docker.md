@@ -17,3 +17,12 @@ Linux軟體容器（Linux Containers）簡稱LXC，一種作業系統層虛擬�
 因為容器並沒有作業系統，所以容易部署且會快速啟動。
 ![ContainerAndVM](/images/VMandContainer.PNG)
 更多資料請參考[https://www.docker.com/resources/what-container](https://www.docker.com/resources/what-container)
+
+Feauture    |    Containers    | Virtual Machines ( 傳統的虛擬化 )
+------------|------------------|--------------------------------
+啟動        |        秒開       | 最快也要分鐘
+容量        |         MB        | GB
+效能        |         快        | 慢
+支援數量     | 非常多 Containers | 10多個就很了不起了
+複製相同環境 |         快        | 超慢
+ 
