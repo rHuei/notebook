@@ -1,6 +1,8 @@
 # Docker 基本教學與指令
-[簡介](#簡介)
-[Docker指令](#Docker指令)
+* [簡介](#簡介)
+* [Docker指令](#Docker指令)
+* [建立apache容器](#建立apache容器)
+* [Dockerfile](#Dockerfile)
 ## 簡介
 [Docker](https://www.docker.com/)
 
@@ -163,6 +165,7 @@ docker commit test web
 docker run -itd -p 80:80 web /usr/sbin/apachectl -DFOREGROUND
 ```
 以上步驟非常麻煩，可以建立一個類似腳本的方式，透過Dockerfile一建完成所有動作，快速建置映像檔。
+
 ## Dockerfile
 使用 Dockerfile 讓使用者可以建立自定義的映像檔
 ### 基本架構
