@@ -148,6 +148,7 @@ docker rm -f <container_id>
 ```
 
 ### docker rmi
+刪除映像檔
 ```
 docker rmi <images_name>
 ```
