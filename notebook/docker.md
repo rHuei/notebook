@@ -34,7 +34,7 @@ Feauture    |    Containers    | Virtual Machines ( 傳統的虛擬化 )
 ***Image***
 
 映像檔，可以把它想成是以前我們在玩 VM 的 Guest OS（ 安裝在虛擬機上的作業系統 ）。
-Image是唯獨(R/O)
+Image是唯讀(R/O)
 
 ***Container***
 
