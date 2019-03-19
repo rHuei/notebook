@@ -138,6 +138,19 @@ docker stop jack
 docker commit jack web
 ```
 
+### docker rm
+刪除容器
+```
+docker rm <container_id>
+
+# 強制刪除，如果容器執行中
+docker rm -f <container_id>
+```
+
+### docker rmi
+```
+docker rmi <images_name>
+```
 ## 建立apache容器
 1. 建立新的容器
 ```
