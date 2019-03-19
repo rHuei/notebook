@@ -391,9 +391,42 @@ echo 08 > /proc/irq/36/smp_affinity
 有時你可能需要執行兩次才會生效！處理完畢再重新去看一下 /proc/interrupts 的內容，就會發現不一樣了！不過，這樣的動作對單 CPU 插槽來說， 差異沒有很大！但是如果是很忙的系統，你想要讓系統的資料分流，這可能也是一個好方案！同時，如果系統有多個 CPU 插槽， 請自行參考主機板製造商提供的線路說明，例如 [Supermicro X10DRi 主機板](https://www.supermicro.com/products/motherboard/xeon/c600/x10dri.cfm)，你會看到有兩顆 CPU 插槽，而在其 [說明手冊內頁 (page 1-8)](https://www.supermicro.com/manuals/motherboard/C606_602/MNL-1491.pdf) 的 CPU 與所有週邊設備的運作中，畫面左側的 CPU 是 CPU1 而右側是 CPU2， 所以，你就應該可以理解，應該要將不同的 PCI-E 界面安插在那一個上面，其與 CPU 的溝通中，又應該以誰為優先考量，這就值得去設計了！
 - 使用 numactl 來規範某個程式要指定哪顆 CPU 運作。這也是挺有趣的！ 你可以先透過 ps -eF 找出某個 PID 對應的 CPU 號碼，例如
 ```
+yum install numactl
+
+numactl -H
+------------------------------------------------------------------
+
+available: 1 nodes (0)
+node 0 cpus: 0 1 2 3 4 5 6 7
+node 0 size: 12233 MB
+node 0 free: 8589 MB
+node distances:
+node   0
+  0:  10
+------------------------------------------------------------------
+
+ps -eF
+------------------------------------------------------------------
 UID        PID  PPID  C    SZ   RSS PSR STIME TTY          TIME CMD
 root         1     0  0 48479  7136   0  3月12 ?      00:00:12 /usr/lib/systemd/systemd --switched-root --system --deserialize 22
 root         2     0  0     0     0   5  3月12 ?      00:00:00 [kthreadd]
 root         3     2  0     0     0   0  3月12 ?      00:00:00 [ksoftirqd/0]
 root         5     2  0     0     0   0  3月12 ?      00:00:00 [kworker/0:0H]
+------------------------------------------------------------------
+```
+之後再以 taskset 來更新 PID 對應的 CPU 號碼即可：
+```
+taskset -cp cpuN PID
+```
+例如重複執行 PI 的計算！
+```
+time echo "scale=10000;4*a(1)" | numactl -C 1 bc -lq &> /dev/null &
+top -d 2  # (按下 1 觀察個別 CPU 的變化)
+------------------------------------------------------------------
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+22223 root      20   0   13364   1116    716 R  33.3  0.0   0:13.84 bc
+22217 root      20   0   13364   1120    716 R  26.7  0.0   0:15.34 bc
+22220 root      20   0   13364   1112    716 R  26.7  0.0   0:14.28 bc
+22226 root      20   0   13364   1112    716 R  20.0  0.0   0:13.53 bc
+------------------------------------------------------------------
 ```
