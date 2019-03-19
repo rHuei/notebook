@@ -430,3 +430,105 @@ top -d 2  # (按下 1 觀察個別 CPU 的變化)
 22226 root      20   0   13364   1112    716 R  20.0  0.0   0:13.53 bc
 ------------------------------------------------------------------
 ```
+然後透過 taskset 來改變不同的 PID 到不同的 CPU 去
+```
+taskset -cp 2 22226
+```
+透過這樣的設計，你也可以將 VM 的 CPU 全部綁在同一個 CPU 上面～呵呵！那就好笑了！因為， VM 雖然看到是 4 顆 CPU， 但是其實只用到的實體系統的一個 CPU ID 而已喔！
+- 如果擔心 VM 的 CPU 腳位設定有問題，可以透過底下的方式來處理觀察喔
+```
+VCPU：         0
+處理器：    4
+狀態：       執行中
+處理器時間： 1819.4s
+處理器的同屬： ----y---  # <==重點就是這個東西囉！
+
+VCPU：         1
+處理器：    5
+狀態：       執行中
+處理器時間： 1133.0s
+處理器的同屬： -----y--
+
+VCPU：         2
+處理器：    6
+狀態：       執行中
+處理器時間： 1087.7s
+處理器的同屬： ------y-
+
+VCPU：         3
+處理器：    7
+狀態：       執行中
+處理器時間： 962.2s
+處理器的同屬： -------y
+```
+如果要修改，就得要使用底下的方式來處理：
+```
+virsh vcpuping domainN VcpuN cpuN
+```
+
+### 3. 磁碟性能調校
+基本上，當初使用 virt-install 時，我們已經加入了許多磁碟 I/O 的效能優化調整，這部份就稍微能夠省略的！ 除非未來有問題，再回來進行微調～否則目前包括 cache 以及 io 的設計，應該能符合大部分的使用需求了！
+```
+vim /vmdisk/centos7.xml
+------------------------------------------------------------------
+    <disk type="file" device="disk">
+      <driver name="qemu" type="qcow2" cache="writeback" io="threads"/>
+      <source file="/vmdisk/centos7.raw.img"/>
+      <target dev="vda" bus="virtio"/>
+    </disk>
+------------------------------------------------------------------
+```
+
+### 4. 顯示卡調校
+- 我們大部分使用文字界面來操作系統，所以這個部份顯的不是很重要！但是，如果你需要圖形界面時，或許這個設定還需要調整一下比較好。 我們在安裝時，已經指定了 qxl 這個顯示卡界面，但是並沒有指定顯示卡的記憶體相關資訊，所以，這裡我們可以做點變化
+```
+vim /vmdisk/centos7.xml
+------------------------------------------------------------------
+# 原本是這樣
+    <video>
+      <model type="qxl"/>
+    </video>
+
+# 嘗試改成這樣：
+    <video>
+      <model type="qxl" vram64='16384' heads='1' />
+    </video>
+------------------------------------------------------------------
+```
+- 除了顯示卡本身之外，連線的方式也可以進行效能調整！可以找到 graphical 的項目來調整這個連線的狀態！ 如果是考量傳輸資料的頻寬，那麼傳輸過程中，所有可以進行影像壓縮的功能，全部都可以啟動！如此則可以減少頻寬的使用
+```
+vim /vmdisk/centos7.xml
+------------------------------------------------------------------
+# 原本長這樣：
+    <graphics type="spice" port="5911" listen="0.0.0.0" passwd="xxxxxxxxxxx">
+      <image compression="off"/>
+    </graphics>
+
+# 可以改成這個樣子：
+    <graphics type="spice" port="5911" listen="0.0.0.0" passwd="xxxxxxxxxxx">
+       <image compression='auto_glz' />
+       <jpeg compression='auto' />
+       <zlib compression='auto' />
+       <playback compression='on' />
+       <streaming mode='filter' />
+    </graphics>
+------------------------------------------------------------------
+```
+ - 最後，如果沒有需要用到 spice 的 USB 傳輸偵測，那麼可以將 spice 相關的 channel 取消， 這樣可以讓虛擬終端機的運作較為快速！免得一直在 server / client 之間偵測 usb 的行為，導致傳輸有點慢
+```
+vim /vmdisk/centos7.xml
+# 找到底下這些關鍵字：
+    <channel type="unix">
+      <source mode="bind"/>
+      <target type="virtio" name="org.qemu.guest_agent.0"/>
+    </channel>
+    <channel type="spicevmc">
+      <target type="virtio" name="com.redhat.spice.0"/>
+    </channel>
+    <redirdev bus="usb" type="spicevmc"/>
+    <redirdev bus="usb" type="spicevmc"/>
+# 通通刪除囉！
+```
+### 5. 其實最好調整好一個，就處理一次重新啟動的任務，方便找出哪邊有不支援的參數，修改上面會比較快速！ 全部都處理完畢之後，就可以完整關閉虛擬機器，然後再重新啟動虛擬機器，這樣才能夠讓 XML 檔案的內容生效！
+
+```
