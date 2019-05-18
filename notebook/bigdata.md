@@ -11,3 +11,4 @@
 - BigData Architecture
 - BigData Aigorithms
 - BigData Funtions
+[手冊下載](https://www.bigdataframework.org/certifications/enterprise-big-data-professional/)
