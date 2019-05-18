@@ -24,3 +24,13 @@
 - 流程: 流程可以幫助這組人集中方向，流程帶來了可衡量的步驟。
 - 職能: 組織文化，組織架構和每個人的工作角色的搭配，分工作業將會是一個重要的觀念。
 - 人工智慧: 人工智慧為整個世界提供了潛力，也可能為這個框架帶來未知能力。
+
+#### 使用大數據框架
+BigData strategy > BigData Architecture > BigData Aigorithms > BigData Processes > BigData Funtions > BigData Management
+
+#### 策略
+1. Define business objectives
+2. Execute a current state assessment
+3. Identify and prioritize Use Cases
+4. Formulate a Big Data Roadmap
+5. Embed through Change Management
