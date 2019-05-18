@@ -34,3 +34,18 @@ BigData strategy > BigData Architecture > BigData Aigorithms > BigData Processes
 3. Identify and prioritize Use Cases
 4. Formulate a Big Data Roadmap
 5. Embed through Change Management
+
+#### 流程
+- Data analysis process (control)
+- Data governance process (compliance)
+- Data management process (quility)
+
+## 實踐
+#### 從六大類來找可能的方向
+- 描述型: 計算某地區的市場佔有率
+- 推理型: 根據客戶名單來找新客戶
+- 因果型: 為什麼常有
+- 探索型: 買A也有賣B的
+- 預測型: 未來投資
+- 推理型: 銷售員可以增加的收入
+
