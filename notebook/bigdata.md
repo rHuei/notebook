@@ -6,3 +6,8 @@
 4. 溝通與視覺表象
 
 ## 背景
+#### BigData Processes
+- BigData strategy
+- BigData Architecture
+- BigData Aigorithms
+- BigData Funtions
