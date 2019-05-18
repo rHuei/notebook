@@ -13,3 +13,5 @@
 - BigData Funtions
 
 [手冊下載](https://www.bigdataframework.org/certifications/enterprise-big-data-professional/)
+
+台灣FB: EBDCinTainwan
