@@ -5,3 +5,6 @@
 - [實體主機母系統 (Host) 的設計](/notebook/Host_basic_setting.md)
 - [虛擬機器的服務、安裝與啟用](/notebook/virtualization.md)
 - [Docker 基本教學與指令](/notebook/docker.md)
+- [oVirt SPICE PROXY](/notebook/ovirt-spice-proxy.md)
+- [2019 5月份 SA@Tainan 5/18(六) 大數據的實踐，除了技術，還需要什麼？](/notebook/bigdata.md)
+- [2019 6月份 SA@Tainan 6/1(六) Working with PowerShell](/notebook/powershell.md)
