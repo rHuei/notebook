@@ -4,7 +4,7 @@ Windows Server更新服務（英語：Windows Server Update Services，縮寫WSU
 
 # How to install and configure WSUS on Windows server 2016
 [參考資料:https://0857.000webhostapp.com/windows/how-to-install-and-configure-wsus-on-windows-server-2016-part-1/](https://0857.000webhostapp.com/windows/how-to-install-and-configure-wsus-on-windows-server-2016-part-1/)
-
+[指令法寶:https://goalkicker.com/](https://goalkicker.com/)
 ### Install
 ```
 The point:
@@ -112,3 +112,17 @@ WSUS = APIs(.NET) + IIS + DB
     % All Users's Profile Path "$PROFILE.AllUsersAllHosts"
   * To end "Stop-Transcript"
 - On Remote Hosts "Use PS-Session"
+###  BITS
+- What's the "BITS"?
+  * "Background Intelligent Transfer Service"
+  * Start in "Windows 2000"
+### PSObject
+- [PScustomObject] in PS v3.0
+- No Type "PSObject"!
+- No "Hashtable"!
+- Usually use with "Foreach".
+### Reference Document
+- Basic Explanation
+- Microsoft Website
+- Active Directory with PowerShell
+- [Learn Windows PowerShell](https://www.books.com.tw/products/0010809471)
