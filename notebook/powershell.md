@@ -26,3 +26,10 @@ WSUS = APIs(.NET) + IIS + DB
 
 > 不要在 WSUS Server 進行同步的時候作管理或維護的動作，以免導致WSUS DB索引錯亂!!
 
+### Server
+- Updates
+  * Check Related Information
+  * Approve or Decline
+- Client
+  * State: Doenload,Reboot,Install...etc
+  * 
