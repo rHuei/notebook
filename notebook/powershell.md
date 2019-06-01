@@ -53,3 +53,62 @@ WSUS = APIs(.NET) + IIS + DB
   Get-Item Env:
   ```
 - Current Version is "PowerShell 6.0~"
+### Help
+- powershell.exe /?
+- Get-Command
+- Get-Alias
+- Get-Help
+### Type
+- PowerShell = Array + String
+  * Special Cmdlet: |
+    % Usage:AD Cmdlet or EMS on Exchange ...etc.
+  * Default format:String
+### Live
+- Running on "Memory"!
+  * Watching on "Task Manager"
+  * It's a "Process"
+  * Ya...."Unlimited"!!
+- Default by "32 Thread" as a Process
+  * "Session"?! > "RunSpace"
+### Work
+- How to "Run"?
+  * Excuted by "Line"
+  * "Function".....?
+- What to do about "nin-Ps file"?
+  * 'Bat'?
+  * 'exe'?
+  ```
+  # 等待程式跑完
+  Start-Sleep-Seconds 10
+  $batfile = [diagnostics.process]::Start("D:\Demo\My_Script.bat")
+  $batfile.WaitForExit()
+  ```
+### Null
+- What's "Null"?
+  * $a = ""
+  * $a = ''
+  * $a = $Null
+  * $a ≠ "" ≠ '' ≠ $Null
+- Up to your "Powershell Version".
+### Array
+- Default by "One-dimensional array"
+### Filter
+- How to cut the "Messages"?
+  * $a "- Replace ("")"
+  * $a "- Split ("")"
+  * $a -match $Regex
+- Use SPecial Characters like "`n `r `t"
+### History
+- How to Check "Previous Command"?
+  * "Get-History"
+  * Alias "H"
+  * Added "| ? { $_.CommandLine -eq 'H' }"
+  * r -ld "Number"
+- Use "F7" > "Read-Host"
+### Record
+- Fefault "Saved" & "Stored"
+  * Use "Start-Transcript"
+  * Stored Path "$PROFILE"
+    % All Users's Profile Path "$PROFILE.AllUsersAllHosts"
+  * To end "Stop-Transcript"
+- On Remote Hosts "Use PS-Session"
