@@ -39,3 +39,17 @@ WSUS = APIs(.NET) + IIS + DB
   * Run Cleanup Wizard
   * Re-Index DB
 
+# Working with Powershell
+### Agenda
+- What's the "PowerShell"?
+  * How many people aren't using it?
+- Let's Dance with "WSUS"!
+### Version
+- How to check "PowerShell Version"?
+  * For OS:Winver
+  * For PS:$PSVersionTable
+  * For EV:ENV:(Use 'Get-Item')
+  ```
+  Get-Item Env:
+  ```
+- Current Version is "PowerShell 6.0~"
