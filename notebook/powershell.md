@@ -32,4 +32,9 @@ WSUS = APIs(.NET) + IIS + DB
   * Approve or Decline
 - Client
   * State: Doenload,Reboot,Install...etc
-  * 
+  
+  ### Maintain
+  - Microsoft is "SO SWEET",But...
+    * Decline
+    * Run Cleanup Wizard
+    * Re-Index DB
