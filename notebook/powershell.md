@@ -19,7 +19,7 @@ WSUS = APIs(.NET) + IIS + DB
 ```
  1. GPO
  2. Event Log: Detect,Install,Results
- 3. Error Massenges
+ 3. Error Messages
 ```
 
 > 不要在 WSUS Server 進行同步的時候作管理或維護的動作，以免導致WSUS DB索引錯亂!!
