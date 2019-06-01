@@ -10,4 +10,17 @@ The point:
   share Folder
   WID V.S. DB
 ```
-----
+---
+### Setting
+```
+WSUS = APIs(.NET) + IIS + DB
+```
+### Client
+```
+ 1. GPO
+ 2. Event Log: Detect,Install,Results
+ 3. Error Massenges
+```
+
+> 不要在 WSUS Server 進行同步的時候作管理或維護的動作，以免導致WSUS DB索引錯亂!!
+
